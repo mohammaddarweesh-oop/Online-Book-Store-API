@@ -3,7 +3,7 @@ const {
   validateCreateNewAuthor,
   validateUpdateAuthor,
 } = require("../models/Authors");
-const expressAsyncHandler = require("express-async-handler");
+const asyncHandler = require("express-async-handler");
 
 /**
  * @desc Get All Authors
@@ -13,7 +13,7 @@ const expressAsyncHandler = require("express-async-handler");
  *
  */
 
-const getAllAuthors = expressAsyncHandler(async (req, res) => {
+const getAllAuthors = asyncHandler(async (req, res) => {
   //pagination
   const { pageNumber } = req.query;
   const authorPerPage = 2;
@@ -34,7 +34,7 @@ const getAllAuthors = expressAsyncHandler(async (req, res) => {
  *
  */
 
-const getAuthorById = expressAsycHandler(async (req, res) => {
+const getAuthorById = asyncHandler(async (req, res) => {
   const author = await Author.findById(req.params.id);
   if (author) {
     res.status(200).json(author);
