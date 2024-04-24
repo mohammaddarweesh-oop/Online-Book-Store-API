@@ -9,15 +9,13 @@ const {
   deleteBookById,
 } = require("../controllers/bookController");
 
-router.get("/", getAllBooks);
+router.route("/").get(getAllBooks).post(verifyTokenAndAdmin, createNewBook);
 
-router.get("/:id", getBookById);
-
-router.post("/", verifyTokenAndAdmin, createNewBook);
-
-router.put("/:id", verifyTokenAndAdmin, updateBook);
-
-router.delete("/:id", verifyTokenAndAdmin, deleteBookById);
+router
+  .route("/:id")
+  .get(getBookById)
+  .put(verifyTokenAndAdmin, updateBook)
+  .delete(verifyTokenAndAdmin, deleteBookById);
 
 // validate add new book
 
