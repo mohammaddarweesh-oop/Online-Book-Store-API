@@ -9,8 +9,10 @@ const {
   deleteBookById,
 } = require("../controllers/bookController");
 
+// /api/books
 router.route("/").get(getAllBooks).post(verifyTokenAndAdmin, createNewBook);
 
+// /api/books/:id
 router
   .route("/:id")
   .get(getBookById)
