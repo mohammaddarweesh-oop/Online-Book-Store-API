@@ -27,12 +27,17 @@ app.use(logger);
 
 // apply middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+// driver ejs for express
+app.set("view engine", "ejs");
 
 app.use("/api/books", require("./routes/book"));
 app.use("/api/authors", require("./routes/authors"));
 app.use("/api/cart", require("./routes/Cart"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/users", require("./routes/users"));
+// MVC without api
+app.use("/password", require("./routes/password"));
 
 // Error Handler Middleware
 
