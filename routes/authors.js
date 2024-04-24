@@ -174,7 +174,15 @@ const {
 router.get(
   "/",
   expressAsycHandler(async (req, res) => {
-    const authorsList = await Author.find().sort({ name: 1 }); //.select("name Image -_id");
+    //pagination
+    const { pageNumber } = req.query;
+    const authorPerPage = 2;
+
+    const authorsList = await Author.find()
+      .sort({ name: 1 })
+      .skip((pageNumber - 1) * authorPerPage)
+      .limit(authorPerPage);
+    //.sort({ name: 1 }.select("name Image -_id");
 
     res.status(200).json(authorsList);
   })
