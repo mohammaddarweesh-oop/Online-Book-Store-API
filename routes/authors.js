@@ -10,14 +10,12 @@ const {
   getAllAuthors,
 } = require("../controllers/authorController");
 
-router.get("/", getAllAuthors);
+router.route("/").get(getAllAuthors).post(verifyTokenAndAdmin, createNewAuthor);
 
-router.get("/:id", getAuthorById);
-
-router.post("/", verifyTokenAndAdmin, createNewAuthor);
-
-router.put("/:id", verifyTokenAndAdmin, updateAuthorById);
-
-router.delete("/:id", verifyTokenAndAdmin, deleteAuthorById);
+router
+  .route("/:id")
+  .get(getAuthorById)
+  .put(verifyTokenAndAdmin, updateAuthorById)
+  .delete(verifyTokenAndAdmin, deleteAuthorById);
 
 module.exports = router;
