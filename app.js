@@ -2,6 +2,7 @@ const express = require("express");
 const connectToDB = require("./config/db");
 const { logger } = require("./middlewares/logger");
 const { notFound, errorHandler } = require("./middlewares/errors");
+const path = require("path");
 require("dotenv").config();
 
 // dotenv.config();
@@ -27,6 +28,8 @@ app.use(logger);
 
 // apply middlewares
 app.use(express.json());
+// static folder
+app.use(express.static(path.join(__dirname, "images")));
 app.use(express.urlencoded({ extended: false }));
 // driver ejs for express
 app.set("view engine", "ejs");

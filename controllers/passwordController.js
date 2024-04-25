@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const { User } = require("../models/User");
+const { User, validateChangePassword } = require("../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 // for email validation or send emails ...etc
@@ -61,15 +61,15 @@ module.exports.sendForgotPasswordView = asyncHandler(async (req, res) => {
     transporter.sendMail(mailOptions, function (error, success) {
       if (error) {
         console.log(error);
+        res.status(500).json({ message: "Something went wrong" });
       } else {
         console.log("Email sent :" + success);
+        res.render("link-send");
       }
     });
-
-    res.render("link-send");
   } catch (error) {
     console.log(error);
-    res.json({ message: "Errorrrrrr" });
+    res.json({ message: "Error" });
   }
 });
 
@@ -108,6 +108,11 @@ module.exports.getResetPasswordView = asyncHandler(async (req, res) => {
 
 module.exports.sendResetPasswordView = asyncHandler(async (req, res) => {
   // todo validation
+  const { error } = validateChangePassword(req.body);
+
+  if (error) {
+    return res.status(400).json({ message: error.details[0].error });
+  }
 
   const user = await User.findById(req.params.userId);
 
