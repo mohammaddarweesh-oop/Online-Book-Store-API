@@ -36,6 +36,7 @@ app.use("/api/authors", require("./routes/authors"));
 app.use("/api/cart", require("./routes/Cart"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/users", require("./routes/users"));
+app.use("/api/upload", require("./routes/upload"));
 // MVC without api
 app.use("/password", require("./routes/password"));
 
