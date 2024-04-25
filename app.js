@@ -3,6 +3,8 @@ const connectToDB = require("./config/db");
 const { logger } = require("./middlewares/logger");
 const { notFound, errorHandler } = require("./middlewares/errors");
 const path = require("path");
+const helmet = require("helmet");
+const cors = require("cors");
 require("dotenv").config();
 
 // dotenv.config();
@@ -31,6 +33,13 @@ app.use(express.json());
 // static folder
 app.use(express.static(path.join(__dirname, "images")));
 app.use(express.urlencoded({ extended: false }));
+// for policy
+app.use(helmet());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 // driver ejs for express
 app.set("view engine", "ejs");
 
